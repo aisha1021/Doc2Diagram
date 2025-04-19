@@ -6,9 +6,10 @@ from perform import SmartDocumentProcessor
 import asyncio
 from PIL import Image
 import io
+import time
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app, supports_credentials=True, expose_headers=['Content-Disposition'])
 
 
 @app.route("/process-document", methods=["POST"])
@@ -31,6 +32,15 @@ def process_document():
 
         temp_dir = "temp"
         os.makedirs(temp_dir, exist_ok=True)
+        
+        # Clear existing files in temp directory
+        for existing_file in os.listdir(temp_dir):
+            file_path = os.path.join(temp_dir, existing_file)
+            try:
+                if os.path.isfile(file_path):
+                    os.unlink(file_path)
+            except Exception as e:
+                print(f"Error deleting {file_path}: {e}")
 
         file_path = os.path.join(temp_dir, file.filename)
         file.save(file_path)
@@ -39,15 +49,31 @@ def process_document():
         processor = SmartDocumentProcessor()
         asyncio.run(processor.process())
 
+        # Add a small delay to ensure file is completely written
+        time.sleep(0.5)
+        
         png_path = os.path.join(temp_dir, "workflow.png")
         if os.path.exists(png_path):
-            return send_file(
-                png_path,
-                mimetype="image/png",
-                as_attachment=True,
-                download_name="workflow.png",
-            )
+            print(f"Sending file: {png_path}")
+            try:
+                return send_file(
+                    png_path,
+                    mimetype="image/png",
+                    as_attachment=True,
+                    download_name="workflow.png",
+                )
+            except Exception as e:
+                print(f"Error sending file: {e}")
+                # If send_file fails, try to read the file and send as base64
+                with open(png_path, "rb") as f:
+                    image_data = f.read()
+                    encoded = base64.b64encode(image_data).decode('utf-8')
+                    return jsonify({
+                        "image": encoded,
+                        "filename": "workflow.png"
+                    })
         else:
+            print("PNG file not found")
             return {"error": "Failed to generate diagram"}, 500
 
     except Exception as e:
@@ -61,7 +87,7 @@ def process_document():
 @app.route("/process-camera", methods=["POST"])
 def process_camera():
     try:
-        print("Received request")
+        print("Received camera request")
         print("Request headers:", dict(request.headers))
         print("Request files:", request.files)
 
@@ -85,7 +111,8 @@ def process_camera():
         for existing_file in os.listdir(temp_dir):
             file_path = os.path.join(temp_dir, existing_file)
             try:
-                os.unlink(file_path)
+                if os.path.isfile(file_path):
+                    os.unlink(file_path)
             except Exception as e:
                 print(f"Error deleting {file_path}: {e}")
 
@@ -98,16 +125,32 @@ def process_camera():
         processor = SmartDocumentProcessor()
         asyncio.run(processor.process())
 
+        # Add a small delay to ensure file is completely written
+        time.sleep(0.5)
+        
         # Return the generated PNG
         png_path = os.path.join(temp_dir, "workflow.png")
         if os.path.exists(png_path):
-            return send_file(
-                png_path,
-                mimetype="image/png",
-                as_attachment=True,
-                download_name="workflow.png",
-            )
+            print(f"Sending file: {png_path}")
+            try:
+                return send_file(
+                    png_path,
+                    mimetype="image/png",
+                    as_attachment=True,
+                    download_name="workflow.png",
+                )
+            except Exception as e:
+                print(f"Error sending file: {e}")
+                # If send_file fails, try to read the file and send as base64
+                with open(png_path, "rb") as f:
+                    image_data = f.read()
+                    encoded = base64.b64encode(image_data).decode('utf-8')
+                    return jsonify({
+                        "image": encoded,
+                        "filename": "workflow.png"
+                    })
         else:
+            print("PNG file not found")
             return {"error": "Failed to generate diagram"}, 500
 
     except Exception as e:
