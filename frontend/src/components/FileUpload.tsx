@@ -23,20 +23,55 @@ const FileUpload: React.FC<FileUploadProps> = ({
       });
       
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Failed to process document');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to process document');
       }
+
+      const contentType = response.headers.get('content-type');
       
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'workflow.png';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
+      // Handle standard file download
+      if (contentType && contentType.includes('image/png')) {
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'workflow.png';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      } 
+      // Handle base64 fallback response
+      else if (contentType && contentType.includes('application/json')) {
+        const data = await response.json();
+        if (data.image) {
+          // Create a download from base64
+          const byteCharacters = atob(data.image);
+          const byteNumbers = new Array(byteCharacters.length);
+          
+          for (let i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+          }
+          
+          const byteArray = new Uint8Array(byteNumbers);
+          const blob = new Blob([byteArray], { type: 'image/png' });
+          
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = data.filename || 'workflow.png';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+        } else {
+          throw new Error('Invalid response format');
+        }
+      } else {
+        throw new Error('Unexpected response format');
+      }
     } catch (err) {
+      console.error(err);
       setError(err instanceof Error ? err.message : 'Failed to process document');
     } finally {
       setIsLoading(false);
