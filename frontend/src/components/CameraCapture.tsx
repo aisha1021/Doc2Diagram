@@ -41,7 +41,7 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({
       const formData = new FormData();
       formData.append('file', new File([blob], 'capture.jpg', { type: 'image/jpeg' }));
       
-      const response = await fetch('http://localhost:5001/process-camera', {
+      const response = await fetch('https://doc2diagram-backend.onrender.com/process-camera', {
         method: 'POST',
         body: formData,
       });
