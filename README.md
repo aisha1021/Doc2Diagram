@@ -52,11 +52,15 @@ Your application should now be live at `http://localhost:5173` (or the port Vite
 
 Upload a scanned or photographed image of a handwritten diagram to the interface.
 
+![Hand-Drawn Input](./image_test.jpg)
+
 ### Output: Digital Diagram
 
 The AI analyzes the content and produces a cleaned-up, readable, and logical digital workflow diagram, ready for further editing or sharing.
 
 > ✨ This feature is particularly useful for converting whiteboard notes and meeting sketches into formal documentation.
+
+![Generated_Result](./image_test_result.jpg)
 
 ## 🚀 Future Scope
 
