@@ -12,6 +12,7 @@ import atexit
 import asyncio
 from PIL import Image
 import io
+import traceback
 
 
 class SmartDocumentProcessor:
