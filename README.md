@@ -20,7 +20,7 @@ This application demonstrates the capabilities of an intelligent assistant that 
 ### 1. Clone the Repository
 
 ```bash
-git clone [https://github.com/your-username/Doc2Diagram.git](https://github.com/aisha1021/Doc2Diagram.git)
+git clone https://github.com/aisha1021/Doc2Diagram.git
 cd Doc2Diagram
 ```
 
