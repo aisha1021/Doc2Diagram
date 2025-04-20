@@ -2,6 +2,8 @@
 
 **Doc2Diagram** is a prototype AI-powered web application that transforms documentation, images, and hand-drawn sketches into clear and professional workflow diagrams. This project serves as an extension to previous work on AI agent development, envisioning future deployment alongside tools such as **Microsoft Copilot** for seamless integration into workplace productivity environments.
 
+![Doc2Diagram_logo](./Doc2Diagram_v2.png)
+
 ## 🔍 Overview
 
 This application demonstrates the capabilities of an intelligent assistant that can analyze content and generate structured visual outputs. Whether it's handwritten notes or technical documents, Doc2Diagram translates them into usable and visually digestible diagrams — streamlining documentation workflows in both academic and professional settings.
