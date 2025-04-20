@@ -60,7 +60,7 @@ The AI analyzes the content and produces a cleaned-up, readable, and logical dig
 
 > ✨ This feature is particularly useful for converting whiteboard notes and meeting sketches into formal documentation.
 
-![Generated_Result](./image_test_result.jpg)
+![Digital Output](./image_test_result.png)
 
 ## 🚀 Future Scope
 
