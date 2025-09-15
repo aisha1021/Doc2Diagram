@@ -4,11 +4,11 @@
 
 ![Doc2Diagram_logo](./Doc2Diagram_v2.png)
 
-## 🔍 Overview
+## Overview
 
 This application demonstrates the capabilities of an intelligent assistant that can analyze content and generate structured visual outputs. Whether it's handwritten notes or technical documents, Doc2Diagram translates them into usable and visually digestible diagrams — streamlining documentation workflows in both academic and professional settings.
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 - **Frontend**: React + TypeScript + Vite  
 - **Backend**: Python (Flask)  
@@ -17,7 +17,7 @@ This application demonstrates the capabilities of an intelligent assistant that 
   - Frontend hosted as a static site (e.g., Render)  
   - Backend deployed as a web service (e.g., Render)
 
-## ⚙️ Setup Instructions
+## Setup Instructions
 
 ### 1. Clone the Repository
 
@@ -48,7 +48,7 @@ npm run dev
 
 Your application should now be live at `http://localhost:5173` (or the port Vite specifies).
 
-## 🧠 Example Workflow
+## Example Workflow
 
 ### Input: Hand-Drawn Diagram
 
@@ -60,11 +60,11 @@ Upload a scanned or photographed image of a handwritten diagram to the interface
 
 The AI analyzes the content and produces a cleaned-up, readable, and logical digital workflow diagram, ready for further editing or sharing.
 
-> ✨ This feature is particularly useful for converting whiteboard notes and meeting sketches into formal documentation.
+> This feature is particularly useful for converting whiteboard notes and meeting sketches into formal documentation.
 
 ![Digital Output](./image_test_result.png)
 
-## 🚀 Future Scope
+## Future Scope
 
 As a working prototype, **Doc2Diagram** offers a glimpse into the future of intelligent productivity tools. Planned enhancements include:
 
